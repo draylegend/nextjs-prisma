@@ -1,12 +1,13 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import { useMemo, useState } from "react";
-import { createTodo, deleteTodo, toggleTodo, useTodos } from "../api";
-import styles from "../styles/Home.module.css";
-import { Todo } from "../types";
+import { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useState } from 'react';
+import { createTodo, deleteTodo, toggleTodo, useTodos } from '../api';
+import styles from '../styles/Home.module.css';
+import { Todo } from '../types';
 
 export const TodoList: React.FC = () => {
-  const { data: todos, error } = useTodos();
+  const {data: todos, error} = useTodos();
 
   if (error != null) return <div>Error loading todos...</div>;
   if (todos == null) return <div>Loading...</div>;
@@ -18,16 +19,16 @@ export const TodoList: React.FC = () => {
   return (
     <ul className={styles.todoList}>
       {todos.map(todo => (
-        <TodoItem todo={todo} />
+        <TodoItem todo={todo}/>
       ))}
     </ul>
   );
 };
 
-const TodoItem: React.FC<{ todo: Todo }> = ({ todo }) => (
+const TodoItem: React.FC<{ todo: Todo }> = ({todo}) => (
   <li className={styles.todo}>
     <label
-      className={`${styles.label} ${todo.completed ? styles.checked : ""}`}
+      className={`${styles.label} ${todo.completed ? styles.checked : ''}`}
     >
       <input
         type="checkbox"
@@ -45,14 +46,14 @@ const TodoItem: React.FC<{ todo: Todo }> = ({ todo }) => (
 );
 
 const AddTodoInput = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   return (
     <form
       onSubmit={async e => {
         e.preventDefault();
         createTodo(text);
-        setText("");
+        setText('');
       }}
       className={styles.addTodo}
     >
@@ -72,21 +73,22 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <Head>
         <title>Railway NextJS Prisma</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico"/>
       </Head>
 
       <header className={styles.header}>
+        <Link href="about">About</Link>
         <h1 className={styles.title}>Todos</h1>
         <h2 className={styles.desc}>
-          NextJS app connected to Postgres using Prisma and hosted on{" "}
+          NextJS app connected to Postgres using Prisma and hosted on{' '}
           <a href="https://railway.app">Railway</a>
         </h2>
       </header>
 
       <main className={styles.main}>
-        <AddTodoInput />
+        <AddTodoInput/>
 
-        <TodoList />
+        <TodoList/>
       </main>
     </div>
   );
